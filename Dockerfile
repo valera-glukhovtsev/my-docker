@@ -17,4 +17,5 @@ ENV DISPLAY=:99
 # install selenium
 RUN pip install selenium==3.8.0
 
-ENTRYPOINT python ./test.py
+# ENTRYPOINT python ./test.py
+ENTRYPOINT python -m unittest test.py
