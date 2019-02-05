@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3-onbuild
 
 # install google chrome
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -16,3 +16,5 @@ ENV DISPLAY=:99
 
 # install selenium
 RUN pip install selenium==3.8.0
+
+ENTRYPOINT python ./test.py
