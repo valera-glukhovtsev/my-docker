@@ -1,21 +1,32 @@
-FROM python:3-onbuild
+FROM fedora
+# FROM rappdw/docker-java-python
 
-# install google chrome
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-RUN apt-get -y update
-RUN apt-get install -y google-chrome-stable
-
-# install chromedriver
-RUN apt-get install -yqq unzip
-RUN wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/2.45/chromedriver_linux64.zip
-RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+RUN python3 --version
+RUN java --version
 
 # set display port to avoid crash
-ENV DISPLAY=:99
+# ENV DISPLAY=:99
 
 # install selenium
-RUN pip install selenium==3.8.0
+# RUN pip install selenium==3.8.0
+
+# COPY selenium-server-standalone-3.141.59.jar ./selenium-server-standalone-3.141.59.jar
+# COPY chromedriver.exe ./chromedriver.exe
+
+# Нормальный вариант
+# RUN touch tempnohup.out
+# RUN echo 123 > tempnohup.out
+# RUN sudo apt-get update nohup
+# RUN nohup --version
+# RUN nohup java-jar selenium-server-standalone-3.141.59.jar -role hub &
+# RUN echo 123 >> tempnohup.out
+# RUN sleep 15; cat nohup.out
+
+# Узнать IP
+# RUN java -jar selenium-server-standalone-3.141.59.jar -role hub
+
+# Нормальный вариант
+# RUN nohup java -Dwebdriver.chrome.driver="chromedriver.exe" -jar selenium-server-standalone-3.141.59.jar -role node -hub http://10.100.16.13:4444/grid/register/ -port 80 -browser browserName=chrome &
 
 # ENTRYPOINT python ./test.py
-ENTRYPOINT python -m unittest test.py
+# ENTRYPOINT python -m unittest test.py
